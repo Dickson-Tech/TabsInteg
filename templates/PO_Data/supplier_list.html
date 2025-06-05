@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supplier List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+            margin-top: 30px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 95%;
+            margin: 30px auto 20px auto;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+            table-layout: fixed;
+            word-break: break-word;
+        }
+        th, td {
+            padding: 10px 8px;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+        th {
+            background: #2e7d32;
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        tr:hover {
+            background: #e8f5e9;
+        }
+        a {
+            color: #1976d2;
+            text-decoration: none;
+            margin: 0 4px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .add-btn {
+            display: inline-block;
+            width: 180px;
+            margin: 0 10px 0 0;
+            padding: 12px 0;
+            background: #2e7d32;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .add-btn:hover {
+            background: #388e3c;
+        }
+        tr.selected {
+            background: #b3e5fc !important;
+        }
+        .action-bar {
+            width: 95%;
+            margin: 30px auto 0 auto;
+            text-align: right;
+        }
+        .action-bar button,
+        .action-bar .add-btn {
+            padding: 10px 24px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .edit-btn {
+            background: #757575;
+            color: #fff;
+        }
+        .edit-btn:hover {
+            background: #616161;
+        }
+        .delete-btn {
+            background: #d32f2f;
+            color: #fff;
+        }
+        .delete-btn:hover {
+            background: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Supplier List</h1>
+    <div style="width:95%;margin:0 auto 10px auto;text-align:right;">
+        <form method="get" style="display:inline;">
+            <input type="text" id="searchInput" name="search" value="{{ search|default:'' }}" placeholder="Search suppliers by name..." style="padding:8px;width:250px;border:1.5px solid #2e7d32;border-radius:4px;">
+            <button type="submit" style="padding:8px 18px;background:#2e7d32;color:#fff;border:none;border-radius:4px;cursor:pointer;">Search</button>
+        </form>
+    </div>
+    <table id="supplierTable">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Address1</th>
+            <th>Address2</th>
+            <th>Address3</th>
+            <th>Post Code</th>
+            <th>TIN</th>
+            <th>GST Exempt</th>
+            <th>Email</th>
+            <th>Mobile Phone</th>
+            <th>Contact Name</th>
+            <th>Bank</th>
+            <th>Bank Account</th>
+            <th>BSB</th>
+            <th>Bank Acc Name</th>
+            <th>Product</th>
+        </tr>
+        {% for supplier in page_obj %}
+        <tr data-edit-url="{% url 'supplier_edit' supplier.pk %}" data-delete-url="{% url 'supplier_delete' supplier.pk %}">
+            <td title="{{ supplier.code }}">{{ supplier.code }}</td>
+            <td title="{{ supplier.name }}">{{ supplier.name }}</td>
+            <td title="{{ supplier.address1 }}">{{ supplier.address1 }}</td>
+            <td title="{{ supplier.address2 }}">{{ supplier.address2 }}</td>
+            <td title="{{ supplier.address3 }}">{{ supplier.address3 }}</td>
+            <td title="{{ supplier.post_code }}">{{ supplier.post_code }}</td>
+            <td title="{{ supplier.tin }}">{{ supplier.tin }}</td>
+            <td title="{{ supplier.gst_exempt }}">{{ supplier.gst_exempt }}</td>
+            <td title="{{ supplier.email }}">{{ supplier.email }}</td>
+            <td title="{{ supplier.mobile_phone }}">{{ supplier.mobile_phone }}</td>
+            <td title="{{ supplier.contact_name }}">{{ supplier.contact_name }}</td>
+            <td title="{{ supplier.bank }}">{{ supplier.bank }}</td>
+            <td title="{{ supplier.bank_account }}">{{ supplier.bank_account }}</td>
+            <td title="{{ supplier.bsb }}">{{ supplier.bsb }}</td>
+            <td title="{{ supplier.bank_account_name }}">{{ supplier.bank_account_name }}</td>
+            <td title="{{ supplier.product }}">{{ supplier.product }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="16" style="text-align:center;">No suppliers found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <!-- Pagination controls -->
+    <div style="width:95%;margin:20px auto 0 auto;text-align:center;">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" style="margin:0 8px;">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}" style="margin:0 8px;">Previous</a>
+        {% endif %}
+        <span style="margin:0 8px;">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" style="margin:0 8px;">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" style="margin:0 8px;">Last</a>
+        {% endif %}
+    </div>
+    <div class="action-bar">
+        <a href="{% url 'supplier' %}" class="add-btn">Add Supplier</a>
+        <button class="edit-btn" id="editBtn" disabled>Edit</button>
+        <button class="delete-btn" id="deleteBtn" disabled>Delete</button>
+    </div>
+    <script>
+        const table = document.getElementById('supplierTable');
+        let selectedRow = null;
+        let editUrl = '';
+        let deleteUrl = '';
+
+        for (let i = 1; i < table.rows.length; i++) {
+            table.rows[i].onclick = function() {
+                if (selectedRow) selectedRow.classList.remove('selected');
+                selectedRow = this;
+                this.classList.add('selected');
+                editUrl = this.getAttribute('data-edit-url');
+                deleteUrl = this.getAttribute('data-delete-url');
+                document.getElementById('editBtn').disabled = false;
+                document.getElementById('deleteBtn').disabled = false;
+            }
+        }
+
+        document.getElementById('editBtn').onclick = function() {
+            if (editUrl) window.location.href = editUrl;
+        }
+        document.getElementById('deleteBtn').onclick = function() {
+            if (deleteUrl && confirm('Are you sure you want to delete this supplier?')) {
+                window.location.href = deleteUrl;
+            }
+        }
+
+        // Search by Name only
+        function searchTable() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            for (let i = 1; i < table.rows.length; i++) {
+                let row = table.rows[i];
+                let nameCell = row.cells[1]; // Name is the second column (index 1)
+                let nameText = nameCell ? nameCell.textContent.toLowerCase() : '';
+                row.style.display = nameText.includes(input) ? '' : 'none';
+            }
+        }
+        // Optional: Enable search on Enter key
+        document.getElementById('searchInput').addEventListener('keyup', function(event) {
+            if (event.key === "Enter") searchTable();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Supplier</title>
+</head>
+<body>
+    <h2>Are you sure you want to delete {{ supplier.name }}?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+        <a href="{% url 'supplier_list' %}">Cancel</a>
+    </form>
+</body>
+</html>
