@@ -10,64 +10,64 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path  # Import Path for handling filesystem paths
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent  # Project root directory
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mi73_1lav$r9d$mgk^#(-iwg^cayaw6qh3wwt=havpp5v*a80x'
+SECRET_KEY = 'django-insecure-mi73_1lav$r9d$mgk^#(-iwg^cayaw6qh3wwt=havpp5v*a80x'  # Secret key for cryptographic signing
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # Enables debug mode (should be False in production)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lae\twl.com', '172.20.1.23']  # List of allowed host/domain names
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'PO_Data.apps.PoDataConfig',
+    'django.contrib.admin',            # Admin site
+    'django.contrib.auth',             # Authentication framework
+    'django.contrib.contenttypes',     # Content type framework
+    'django.contrib.sessions',         # Session framework
+    'django.contrib.messages',         # Messaging framework
+    'django.contrib.staticfiles',      # Static files (CSS, JS, Images)
+    'PO_Data.apps.PoDataConfig',       # Your custom app
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',            # Security enhancements
+    'django.contrib.sessions.middleware.SessionMiddleware',     # Session management
+    'django.middleware.common.CommonMiddleware',                # Common HTTP features
+    'django.middleware.csrf.CsrfViewMiddleware',                # CSRF protection
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Authentication
+    'django.contrib.messages.middleware.MessageMiddleware',     # Messaging
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',   # Clickjacking protection
 ]
 
-ROOT_URLCONF = 'Purchase_Order.urls'
+ROOT_URLCONF = 'Purchase_Order.urls'  # Root URL configuration
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Directory for custom templates
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Template engine
+        'DIRS': [BASE_DIR / 'templates'],  # Custom template directory
+        'APP_DIRS': True,                  # Look for templates in app directories
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',         # Adds request object to context
+                'django.contrib.auth.context_processors.auth',        # Adds user object to context
+                'django.contrib.messages.context_processors.messages',# Adds messages to context
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'Purchase_Order.wsgi.application'
+WSGI_APPLICATION = 'Purchase_Order.wsgi.application'  # WSGI application entry point
 
 
 # Database
@@ -75,12 +75,12 @@ WSGI_APPLICATION = 'Purchase_Order.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'purchase_order_db',
-        'USER': 'root',
-        'PASSWORD': 'Kopilga@2025',  # Replace with your actual password
-        'HOST': "localhost",  # Set to 'localhost' or your database server address
-        'PORT': "3306",  # Default MySQL port
+        'ENGINE': 'django.db.backends.mysql',      # Use MySQL as the database backend
+        'NAME': 'purchase_order_db',               # Database name
+        'USER': 'Admin@2025',                            # Database user
+        'PASSWORD': 'Kopilga@2025',                # Database password
+        'HOST': "db",                       # Database host
+        'PORT': "3306",                            # Database port
     }
 }
 
@@ -89,16 +89,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # Checks similarity to user attributes
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',            # Enforces minimum password length
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',           # Prevents common passwords
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',          # Prevents all-numeric passwords
     },
 ]
 
@@ -106,23 +106,24 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-us'  # Default language
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC'        # Default timezone
 
-USE_I18N = True
+USE_I18N = True          # Enable Django’s translation system
 
-USE_TZ = True
+USE_TZ = True            # Enable timezone-aware datetimes
 
-# Login settings
+# Login settings (commented out)
 #LOGIN_URL = '/login/'
 #LOGIN_REDIRECT_URL = '/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'static/'   # URL to access static files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Default type for auto-generated primary keys

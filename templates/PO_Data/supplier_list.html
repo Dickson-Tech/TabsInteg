@@ -1,207 +1,260 @@
-<!DOCTYPE html>
+<!DOCTYPE html> <!-- Declares the document type as HTML5 -->
 <html>
 <head>
-    <title>Supplier List</title>
+    <title>Supplier List</title> <!-- Sets the page title -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Enables responsive scaling for mobile devices -->
     <style>
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f4f6f8;
-            margin: 0;
-            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif; /* Sets the font family */
+            background: #f4f6f8; /* Sets the background color */
+            margin: 0; /* Removes default margin */
+            padding: 0; /* Removes default padding */
         }
         h1 {
-            text-align: center;
-            color: #2e7d32;
-            margin-top: 30px;
+            text-align: center; /* Centers the heading */
+            color: #2e7d32; /* Sets heading color */
+            margin-top: 30px; /* Adds space above the heading */
+        }
+        .table-responsive {
+            width: 100%; /* Full width */
+            overflow-x: auto; /* Enables horizontal scroll on small screens */
         }
         table {
-            border-collapse: collapse;
-            width: 95%;
-            margin: 30px auto 20px auto;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
-            table-layout: fixed;
-            word-break: break-word;
+            border-collapse: collapse; /* Collapses table borders */
+            width: 95%; /* Table width */
+            min-width: 700px; /* Minimum width for horizontal scroll */
+            margin: 30px auto 20px auto; /* Centers table with margin */
+            background: #fff; /* White background */
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08); /* Subtle shadow */
+            table-layout: fixed; /* Fixed table layout */
+            word-break: break-word; /* Breaks long words */
         }
         th, td {
-            padding: 10px 8px;
-            text-align: left;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 180px;
+            padding: 10px 8px; /* Padding inside cells */
+            text-align: left; /* Left-aligns text */
+            white-space: nowrap; /* Prevents text wrap */
+            overflow: hidden; /* Hides overflow text */
+            text-overflow: ellipsis; /* Adds ... for overflow */
+            max-width: 180px; /* Maximum width for cells */
         }
         th {
-            background: #2e7d32;
-            color: #fff;
-            font-weight: 600;
+            background: #2e7d32; /* Green background for headers */
+            color: #fff; /* White text */
+            font-weight: 600; /* Bold text */
         }
         tr:nth-child(even) {
-            background: #f2f2f2;
+            background: #f2f2f2; /* Alternate row color */
         }
         tr:hover {
-            background: #e8f5e9;
+            background: #e8f5e9; /* Row highlight on hover */
         }
         a {
-            color: #1976d2;
-            text-decoration: none;
-            margin: 0 4px;
+            color: #1976d2; /* Link color */
+            text-decoration: none; /* No underline */
+            margin: 0 4px; /* Margin around links */
         }
         a:hover {
-            text-decoration: underline;
+            text-decoration: underline; /* Underline on hover */
         }
         .add-btn {
-            display: inline-block;
-            width: 180px;
-            margin: 0 10px 0 0;
-            padding: 12px 0;
-            background: #2e7d32;
-            color: #fff;
-            text-align: center;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: background 0.2s;
+            background: #2e7d32; /* Green background */
+            color: #fff; /* White text */
         }
         .add-btn:hover {
-            background: #388e3c;
+            background: #388e3c; /* Darker green on hover */
         }
-        tr.selected {
-            background: #b3e5fc !important;
+        .edit-btn {
+            background: #757575; /* Gray background */
+            color: #fff; /* White text */
+        }
+        .edit-btn:hover {
+            background: #616161; /* Darker gray on hover */
+        }
+        .delete-btn {
+            background: #d32f2f; /* Red background */
+            color: #fff; /* White text */
+        }
+        .delete-btn:hover {
+            background: #b71c1c; /* Darker red on hover */
         }
         .action-bar {
-            width: 95%;
-            margin: 30px auto 0 auto;
-            text-align: right;
+            width: 95%; /* Action bar width */
+            margin: 30px auto 0 auto; /* Centers action bar */
+            text-align: right; /* Right-aligns content */
         }
         .action-bar button,
         .action-bar .add-btn {
-            padding: 10px 24px;
-            margin-left: 10px;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            cursor: pointer;
-            font-weight: 500;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            transition: background 0.2s;
+            padding: 10px 24px; /* Button padding */
+            margin-left: 10px; /* Space between buttons */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            font-size: 15px; /* Font size */
+            cursor: pointer; /* Pointer cursor */
+            font-weight: 500; /* Bold text */
+            text-align: center; /* Center text */
+            text-decoration: none; /* No underline */
+            display: inline-block; /* Inline block display */
+            transition: background 0.2s; /* Smooth background transition */
         }
-        .edit-btn {
-            background: #757575;
-            color: #fff;
+        tr.selected {
+            background: #b3e5fc !important; /* Highlight selected row */
         }
-        .edit-btn:hover {
-            background: #616161;
+        /* Responsive styles */
+        @media (max-width: 900px) {
+            table, th, td {
+                font-size: 13px; /* Smaller font on tablets */
+            }
+            .action-bar button,
+            .action-bar .add-btn {
+                font-size: 13px; /* Smaller buttons */
+                padding: 8px 12px; /* Less padding */
+            }
         }
-        .delete-btn {
-            background: #d32f2f;
-            color: #fff;
-        }
-        .delete-btn:hover {
-            background: #b71c1c;
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px; /* Smaller heading */
+            }
+            .action-bar {
+                text-align: center; /* Center buttons */
+                margin-top: 15px; /* Less margin */
+            }
+            .action-bar button,
+            .action-bar .add-btn {
+                display: block; /* Stack buttons vertically */
+                width: 90%; /* Almost full width */
+                margin: 10px auto 0 auto; /* Centered with margin */
+            }
+            .table-responsive {
+                margin: 0; /* Remove extra margin */
+            }
+            table {
+                width: 700px; /* Keep min width for scroll */
+                font-size: 12px; /* Smaller font */
+            }
+            .search-bar {
+                display: flex; /* Flex layout */
+                flex-direction: column; /* Stack vertically */
+                align-items: stretch; /* Stretch to full width */
+                width: 98%; /* Almost full width */
+                margin: 0 auto 10px auto; /* Centered with margin */
+            }
+            .search-bar input, .search-bar button {
+                width: 100%; /* Full width */
+                margin: 4px 0; /* Margin between elements */
+                font-size: 14px; /* Slightly larger font */
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Supplier List</h1>
-    <div style="width:95%;margin:0 auto 10px auto;text-align:right;">
+    <!-- Back button -->
+    <a href="javascript:history.back()" 
+       style="display:inline-block;margin:20px 0 0 30px;padding:8px 22px;background:#1f0faf;color:#fff;border-radius:4px;text-decoration:none;font-size:15px;">
+        &#8592; Back <!-- Left arrow and Back text -->
+    </a>
+    <h1>Supplier List</h1> <!-- Main heading -->
+    <div class="search-bar" style="width:95%;margin:0 auto 10px auto;text-align:right;">
         <form method="get" style="display:inline;">
-            <input type="text" id="searchInput" name="search" value="{{ search|default:'' }}" placeholder="Search suppliers by name..." style="padding:8px;width:250px;border:1.5px solid #2e7d32;border-radius:4px;">
+            <input type="text" id="searchInput" name="search" value="{{ search|default:'' }}" placeholder="Search suppliers by name..." style="padding:8px;width:250px;max-width:100%;border:1.5px solid #2e7d32;border-radius:4px;">
+            <!-- Search input field -->
             <button type="submit" style="padding:8px 18px;background:#2e7d32;color:#fff;border:none;border-radius:4px;cursor:pointer;">Search</button>
+            <!-- Search button -->
         </form>
     </div>
-    <table id="supplierTable">
-        <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Address1</th>
-            <th>Address2</th>
-            <th>Address3</th>
-            <th>Post Code</th>
-            <th>TIN</th>
-            <th>GST Exempt</th>
-            <th>Email</th>
-            <th>Mobile Phone</th>
-            <th>Contact Name</th>
-            <th>Bank</th>
-            <th>Bank Account</th>
-            <th>BSB</th>
-            <th>Bank Acc Name</th>
-            <th>Product</th>
-        </tr>
-        {% for supplier in page_obj %}
-        <tr data-edit-url="{% url 'supplier_edit' supplier.pk %}" data-delete-url="{% url 'supplier_delete' supplier.pk %}">
-            <td title="{{ supplier.code }}">{{ supplier.code }}</td>
-            <td title="{{ supplier.name }}">{{ supplier.name }}</td>
-            <td title="{{ supplier.address1 }}">{{ supplier.address1 }}</td>
-            <td title="{{ supplier.address2 }}">{{ supplier.address2 }}</td>
-            <td title="{{ supplier.address3 }}">{{ supplier.address3 }}</td>
-            <td title="{{ supplier.post_code }}">{{ supplier.post_code }}</td>
-            <td title="{{ supplier.tin }}">{{ supplier.tin }}</td>
-            <td title="{{ supplier.gst_exempt }}">{{ supplier.gst_exempt }}</td>
-            <td title="{{ supplier.email }}">{{ supplier.email }}</td>
-            <td title="{{ supplier.mobile_phone }}">{{ supplier.mobile_phone }}</td>
-            <td title="{{ supplier.contact_name }}">{{ supplier.contact_name }}</td>
-            <td title="{{ supplier.bank }}">{{ supplier.bank }}</td>
-            <td title="{{ supplier.bank_account }}">{{ supplier.bank_account }}</td>
-            <td title="{{ supplier.bsb }}">{{ supplier.bsb }}</td>
-            <td title="{{ supplier.bank_account_name }}">{{ supplier.bank_account_name }}</td>
-            <td title="{{ supplier.product }}">{{ supplier.product }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="16" style="text-align:center;">No suppliers found.</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="table-responsive">
+        <table id="supplierTable">
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Address1</th>
+                <th>Address2</th>
+                <th>Address3</th>
+                <th>Post Code</th>
+                <th>TIN</th>
+                <th>GST Exempt</th>
+                <th>Email</th>
+                <th>Mobile Phone</th>
+                <th>Contact Name</th>
+                <th>Bank</th>
+                <th>Bank Account</th>
+                <th>BSB</th>
+                <th>Bank Acc Name</th>
+                <th>Product</th>
+            </tr>
+            {% for supplier in page_obj %}
+            <tr data-edit-url="{% url 'supplier_edit' supplier.pk %}" data-delete-url="{% url 'supplier_delete' supplier.pk %}">
+                <td title="{{ supplier.code }}">{{ supplier.code }}</td>
+                <td title="{{ supplier.name }}">{{ supplier.name }}</td>
+                <td title="{{ supplier.address1 }}">{{ supplier.address1 }}</td>
+                <td title="{{ supplier.address2 }}">{{ supplier.address2 }}</td>
+                <td title="{{ supplier.address3 }}">{{ supplier.address3 }}</td>
+                <td title="{{ supplier.post_code }}">{{ supplier.post_code }}</td>
+                <td title="{{ supplier.tin }}">{{ supplier.tin }}</td>
+                <td title="{{ supplier.gst_exempt }}">{{ supplier.gst_exempt }}</td>
+                <td title="{{ supplier.email }}">{{ supplier.email }}</td>
+                <td title="{{ supplier.mobile_phone }}">{{ supplier.mobile_phone }}</td>
+                <td title="{{ supplier.contact_name }}">{{ supplier.contact_name }}</td>
+                <td title="{{ supplier.bank }}">{{ supplier.bank }}</td>
+                <td title="{{ supplier.bank_account }}">{{ supplier.bank_account }}</td>
+                <td title="{{ supplier.bsb }}">{{ supplier.bsb }}</td>
+                <td title="{{ supplier.bank_account_name }}">{{ supplier.bank_account_name }}</td>
+                <td title="{{ supplier.product }}">{{ supplier.product }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="16" style="text-align:center;">No suppliers found.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
     <!-- Pagination controls -->
     <div style="width:95%;margin:20px auto 0 auto;text-align:center;">
         {% if page_obj.has_previous %}
-            <a href="?page=1" style="margin:0 8px;">First</a>
-            <a href="?page={{ page_obj.previous_page_number }}" style="margin:0 8px;">Previous</a>
+            <a href="?page=1" style="margin:0 8px;">First</a> <!-- Link to first page -->
+            <a href="?page={{ page_obj.previous_page_number }}" style="margin:0 8px;">Previous</a> <!-- Link to previous page -->
         {% endif %}
-        <span style="margin:0 8px;">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        <span style="margin:0 8px;">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span> <!-- Current page info -->
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" style="margin:0 8px;">Next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}" style="margin:0 8px;">Last</a>
+            <a href="?page={{ page_obj.next_page_number }}" style="margin:0 8px;">Next</a> <!-- Link to next page -->
+            <a href="?page={{ page_obj.paginator.num_pages }}" style="margin:0 8px;">Last</a> <!-- Link to last page -->
         {% endif %}
     </div>
     <div class="action-bar">
-        <a href="{% url 'supplier' %}" class="add-btn">Add Supplier</a>
-        <button class="edit-btn" id="editBtn" disabled>Edit</button>
-        <button class="delete-btn" id="deleteBtn" disabled>Delete</button>
+        <a href="{% url 'supplier' %}" class="add-btn">Add Supplier</a> <!-- Add Supplier button -->
+        <button class="edit-btn" id="editBtn" disabled>Edit</button> <!-- Edit button (disabled by default) -->
+        <button class="delete-btn" id="deleteBtn" disabled>Delete</button> <!-- Delete button (disabled by default) -->
     </div>
     <script>
-        const table = document.getElementById('supplierTable');
-        let selectedRow = null;
-        let editUrl = '';
-        let deleteUrl = '';
+        const table = document.getElementById('supplierTable'); // Get the supplier table
+        let selectedRow = null; // Track the selected row
+        let editUrl = ''; // Store edit URL
+        let deleteUrl = ''; // Store delete URL
 
+        // Add click event to each row (except header)
         for (let i = 1; i < table.rows.length; i++) {
             table.rows[i].onclick = function() {
-                if (selectedRow) selectedRow.classList.remove('selected');
-                selectedRow = this;
-                this.classList.add('selected');
-                editUrl = this.getAttribute('data-edit-url');
-                deleteUrl = this.getAttribute('data-delete-url');
-                document.getElementById('editBtn').disabled = false;
-                document.getElementById('deleteBtn').disabled = false;
+                if (selectedRow) selectedRow.classList.remove('selected'); // Remove previous selection
+                selectedRow = this; // Set new selection
+                this.classList.add('selected'); // Highlight selected row
+                editUrl = this.getAttribute('data-edit-url'); // Get edit URL from row
+                deleteUrl = this.getAttribute('data-delete-url'); // Get delete URL from row
+                document.getElementById('editBtn').disabled = false; // Enable Edit button
+                document.getElementById('deleteBtn').disabled = false; // Enable Delete button
             }
         }
 
+        // Edit button click handler
         document.getElementById('editBtn').onclick = function() {
-            if (editUrl) window.location.href = editUrl;
+            if (editUrl) window.location.href = editUrl; // Go to edit page
         }
+        // Delete button click handler
         document.getElementById('deleteBtn').onclick = function() {
             if (deleteUrl && confirm('Are you sure you want to delete this supplier?')) {
-                window.location.href = deleteUrl;
+                window.location.href = deleteUrl; // Go to delete page if confirmed
             }
         }
 
-        // Search by Name only
+        // Search by Name only (client-side, optional)
         function searchTable() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             for (let i = 1; i < table.rows.length; i++) {
