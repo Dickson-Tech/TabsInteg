@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mi73_1lav$r9d$mgk^#(-iwg^cayaw6qh3wwt=havpp5v*a80x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # Enables debug mode (should be False in production)
 
-ALLOWED_HOSTS = ['lae\twl.com', '172.20.1.23']  # List of allowed host/domain names
+ALLOWED_HOSTS = []#['lae\twl.com', '172.20.1.23']  # List of allowed host/domain names
 
 
 # Application definition
@@ -77,9 +77,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',      # Use MySQL as the database backend
         'NAME': 'purchase_order_db',               # Database name
-        'USER': 'Admin@2025',                            # Database user
+        'USER': 'root',                            # Database user
         'PASSWORD': 'Kopilga@2025',                # Database password
-        'HOST': "db",                       # Database host
+        'HOST': "localhost",                       # Database host
         'PORT': "3306",                            # Database port
     }
 }
@@ -115,8 +115,8 @@ USE_I18N = True          # Enable Django’s translation system
 USE_TZ = True            # Enable timezone-aware datetimes
 
 # Login settings (commented out)
-#LOGIN_URL = '/login/'
-#LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

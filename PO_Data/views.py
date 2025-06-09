@@ -1,11 +1,15 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Supplier
-from .forms import SupplierForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.contrib import messages
+from django.shortcuts import render, get_object_or_404, redirect
+
+from .forms import SupplierForm
+from .models import Supplier
+
 
 # Create your views here.
+@login_required
 def supplier_list_view(request):
     if request.method == 'POST':
         form = SupplierForm(request.POST)
@@ -18,7 +22,10 @@ def supplier_list_view(request):
         suppliers = Supplier.objects.all()
     return render(request, 'supplier_List_form.html', {'form': form, 'suppliers': suppliers})
 
+
 # Create a new supplier
+@login_required
+@permission_required('PO_Data.add_supplier', raise_exception=True)
 def supplier_create(request):
     if request.method == 'POST':
         form = SupplierForm(request.POST)
@@ -35,7 +42,9 @@ def supplier_create(request):
         form = SupplierForm()
     return render(request, 'PO_Data/supplier_List_Form.html', {'form': form})
 
+
 # List all suppliers
+@login_required
 def supplier_list(request):
     query = request.GET.get('search', '')
     suppliers = Supplier.objects.all().order_by('name')
@@ -49,7 +58,10 @@ def supplier_list(request):
         'search': query,
     })
 
+
 # Edit an existing supplier
+@login_required
+@permission_required('PO_Data.change_supplier', raise_exception=True)
 def supplier_edit(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
@@ -62,7 +74,10 @@ def supplier_edit(request, pk):
         form = SupplierForm(instance=supplier)
     return render(request, 'PO_Data/supplier_List_Form.html', {'form': form, 'edit': True, 'supplier': supplier})
 
+
 # Delete a supplier
+@login_required
+@permission_required('PO_Data.delete_supplier', raise_exception=True)
 def supplier_delete(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
