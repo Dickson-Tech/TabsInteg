@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mi73_1lav$r9d$mgk^#(-iwg^cayaw6qh3wwt=havpp5v*a80x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # Enables debug mode (should be False in production)
 
-ALLOWED_HOSTS = []#['lae\twl.com', '172.20.1.23']  # List of allowed host/domain names
+ALLOWED_HOSTS = ['tabsinteg.onrender.com' ]#['lae\twl.com', '172.20.1.23']  # List of allowed host/domain names
 
 
 # Application definition
