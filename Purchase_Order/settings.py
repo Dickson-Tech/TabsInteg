@@ -122,6 +122,7 @@ LOGIN_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'   # URL to access static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # The absolute path to the directory where collectstatic will collect static files for deployment
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
