@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'purchase_order_db',               # Database name
         'USER': 'root',                            # Database user
         'PASSWORD': 'Kopilga@2025',                # Database password
-        'HOST': "tabsinteg.onrender.com",                       # Database host
+        'HOST': "35.164.95.156",                       # Database host
         'PORT': "3306",                            # Database port
     }
 }
